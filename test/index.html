@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Just an example</title>
+        <meta charset="UTF-8">
+        <style type="text/css">
+            .answer { font-style: italic; border: 1px solid blue; border-radius: 5px; padding: 4px 0;}
+            .program-code { display: none; margin-bottom: 30px;  }
+            .program-code .title {background-color: #C8DEF4; border: 1px solid #000;}
+            .program-code .code { border: 1px solid #000; }
+            .program-code .code code { white-space: pre; }
+        </style>
+        
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="../lib/fld.js"></script>
+        
+        <script id="thisscript" type="text/javascript">
+            Lib.postData({}, {datatype: 'json'}).setId('first ajax').then(function(data){
+                return Lib.postData({}, {datatype: 'script', url: data.name + '.js'}).setId('internal ajax');
+            }).setId('after second ajax').done(function(){
+                alert('Request completed successfully!');
+            }, function(){ }).fail(function(err0){
+                alert('Error happened: ' + err0.error);
+                console.log(arguments);
+            }).anyway(function(){
+                $('#programcode').show().find('code').html($('#thisscript').html());
+                
+            });
+        </script>
+    </head>
+    <body>
+        <div id="programcode" class="program-code">
+            <div class="title">Program was completed. Program code is:</div>
+            <div class="code"><code></code></div>
+        </div>
+        <div>Поле снизу будет содержать результат выполнения запроса:</div>
+        <div id="answer" class="answer">Загрузка...</div>
+    </body>
+</html>
