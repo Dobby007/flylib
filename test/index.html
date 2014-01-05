@@ -12,13 +12,28 @@
         </style>
         
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-        <script type="text/javascript" src="../lib/fld.js"></script>
+        <script type="text/javascript" src="../lib/flylib.js"></script>
         
         <script id="thisscript" type="text/javascript">
-            FlyLib.postData({}, {datatype: 'json'}).setId('first ajax').then(function(data){
-                return FlyLib.postData({}, {datatype: 'script', url: data.name + '.js'}).setId('internal ajax');
-            }).setId('after second ajax').done(function(){
+            FL.postData({}, {datatype: 'json'}).setId('first ajax').done(function(data){
+                return FL.postData({}, {datatype: 'script', url: data.name + '.js'}).done(function(){
+                    alert('done 1!');
+                }, function(){
+                    return FL.postData({}, {datatype: 'json'}).done(function(){
+                        alert('done 1-1!');
+                    });
+                });
+            }, function(){
+                return FL.postData({}, {datatype: 'json'}).done(function(){
+                    alert('done 2!');
+                });
+            }, function(){
+                return FL.postData({}, {datatype: 'json'}).done(function(){
+                    alert('done 3!');
+                });
+            }).then().setId('after second ajax').done(function(){
                 alert('Request completed successfully!');
+                DEBUG.log(arguments);
             }, function(){ }).fail(function(err0){
                 alert('Error happened: ' + err0.error);
                 console.log(arguments);
