@@ -15,8 +15,8 @@
         <script type="text/javascript" src="../lib/fld.js"></script>
         
         <script id="thisscript" type="text/javascript">
-            Lib.postData({}, {datatype: 'json'}).setId('first ajax').then(function(data){
-                return Lib.postData({}, {datatype: 'script', url: data.name + '.js'}).setId('internal ajax');
+            FlyLib.postData({}, {datatype: 'json'}).setId('first ajax').then(function(data){
+                return FlyLib.postData({}, {datatype: 'script', url: data.name + '.js'}).setId('internal ajax');
             }).setId('after second ajax').done(function(){
                 alert('Request completed successfully!');
             }, function(){ }).fail(function(err0){
