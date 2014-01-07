@@ -1,7 +1,7 @@
 FlyLib
 ======
 
-FlyLib is a JavaScript library that enables you to use promises in your applolications. You can read more about promises [here](http://www.html5rocks.com/en/tutorials/es6/promises/).
+FlyLib is a JavaScript library that enables you to use promises in your applications.You can read more about promises [here](http://www.html5rocks.com/en/tutorials/es6/promises/).
 
 
 How do you use it?
