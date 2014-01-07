@@ -45,10 +45,10 @@ $.ajax({
 
 What you can do more is to return the promise itself as the result of the success function. And here what will happen in this case...
 
-`Then` function always returns promise and this promise will be resolved only when the internal promise wil
+`Then` function always returns promise and this promise will be resolved only when the internal promise 
 succeeds or fails. So there won't be many callbacks and you will receive  the code that you can easily debug and read.
 
-You can see how to do it in the `test/index.html` file. It uses jQuery-UI library to show modalbox to the user  and then user decides what to do next.
+You can see how to do it in the `test/index.html` file. It uses jQuery-UI library to show modalbox to the user  and the user decides what to do next.
 
 
 So the code for it will look like this:
@@ -56,7 +56,7 @@ So the code for it will look like this:
 ```js
 
 
-Promises.postData(...).
+Promises.postData(...)
   .then(function(data) { 
   	return yesno(); 
   }, ...)
