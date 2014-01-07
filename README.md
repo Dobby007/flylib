@@ -77,4 +77,7 @@ Examples
 More examples will be ready soon...
 
 
+License
+=======
 
+The code is licensed under the Apache License, Version 2.0.
