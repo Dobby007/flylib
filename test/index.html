@@ -16,30 +16,43 @@
         
         <script id="thisscript" type="text/javascript">
             FL.postData({}, {datatype: 'json'}).setId('first ajax').done(function(data){
+                this.stop('stop please', true);
                 return FL.postData({}, {datatype: 'script', url: data.name + '.js'}).done(function(){
+                    
                     alert('done 1!');
                 }, function(){
-                    return FL.postData({}, {datatype: 'json'}).done(function(){
-                        alert('done 1-1!');
+                    return FL.postData({}, {datatype: 'json', url: 'asd'}).done(function(data){
+                        
+                        alert('done 1-1!' + JSON.stringify(data));
                     });
                 });
             }, function(){
-                return FL.postData({}, {datatype: 'json'}).done(function(){
-                    alert('done 2!');
+                return FL.postData({}, {datatype: 'json', url: 'asd'}).done(function(data){
+                    alert('done 2!' + JSON.stringify(data));
+                }).fail(function(err){
+                    alert('fail 2!' + JSON.stringify(err));
                 });
             }, function(){
-                return FL.postData({}, {datatype: 'json'}).done(function(){
-                    alert('done 3!');
+                return FL.postData({}, {datatype: 'json', url: 'asd'}).done(function(data){
+                    alert('done 3!' + JSON.stringify(data));
+                    
                 });
-            }).then().setId('after second ajax').done(function(){
-                alert('Request completed successfully!');
+            }).then().fail(function(){
+                console.log(':::',arguments);
+            }).setId('after second ajax').done(function(){
+                alert('Request completed successfully!' + JSON.stringify(arguments));
                 DEBUG.log(arguments);
-            }, function(){ }).fail(function(err0){
+            }).fail(function(){
+                alert('REquest not completed!' + JSON.stringify(arguments));
+                return false;
+            }).fail(function(err0){
                 alert('Error happened: ' + err0.error);
                 console.log(arguments);
-            }).anyway(function(){
+            }).anywayThen(function(){
                 $('#programcode').show().find('code').html($('#thisscript').html());
                 
+            }).then(null, function(){
+                alert('final promise');
             });
         </script>
     </head>
