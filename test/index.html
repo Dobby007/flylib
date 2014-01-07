@@ -9,50 +9,37 @@
             .program-code .title {background-color: #C8DEF4; border: 1px solid #000;}
             .program-code .code { border: 1px solid #000; }
             .program-code .code code { white-space: pre; }
+            body {
+                font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+                font-size: 62.5%;
+            }
         </style>
-        
+
+        <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
         <script type="text/javascript" src="../lib/flylib.js"></script>
-        
+        <script type="text/javascript" src="../js/jquery-promises.js"></script>
+
         <script id="thisscript" type="text/javascript">
-            Promises.postData({}, {datatype: 'json'}).setId('first ajax').done(function(data){
-                this.stop('stop please', false);
-                return Promises.postData({}, {datatype: 'script', url: data.name + '.js'}).done(function(){
-                    
-                    alert('done 1!');
-                }, function(){
-                    return Promises.postData({}, {datatype: 'json', url: 'asd'}).done(function(data){
-                        
-                        alert('done 1-1!' + JSON.stringify(data));
-                    });
+            var dt;
+            DEBUG.enable(true);
+            Promises.postData({}, {datatype: 'json', url: 'admin.json'}).then(function(data) {
+                dt = data;
+                return Promises.jYesNo('Request result', 'Data was successfully received. Do you wish to show it as a plain text?').done(function(){
+                    DEBUG.log(':::', arguments);
                 });
-            }, function(){
-                return Promises.postData({}, {datatype: 'json', url: 'asd'}).done(function(data){
-                    alert('done 2!' + JSON.stringify(data));
-                }).fail(function(err){
-                    alert('fail 2!' + JSON.stringify(err));
-                });
-            }, function(){
-                return Promises.postData({}, {datatype: 'json', url: 'asd'}).done(function(data){
-                    alert('done 3!' + JSON.stringify(data));
-                    
-                });
-            }).then().fail(function(){
-                console.log(':::',arguments);
-            }).setId('after second ajax').done(function(){
-                alert('Request completed successfully!' + JSON.stringify(arguments));
-                DEBUG.log(arguments);
-            }).fail(function(){
-                alert('REquest not completed!' + JSON.stringify(arguments));
+            }, function(err) {
+                $('#answer').html('Error happened while doing the request to server: ' + err);
                 return false;
-            }).fail(function(err0){
-                alert('Error happened: ' + err0);
-                console.log(arguments);
-            }).anywayThen(function(){
-                $('#programcode ').show().find('code').html($('#thisscript').html());
-                
-            }).then(null, function(){
-                alert('final promise');
+            }).done(function(decision){
+                DEBUG.log(arguments);
+                if(decision === true){
+                    $('#answer').html(JSON.stringify(dt));
+                }else{
+                    $('#answer').html('User doesn\'t want to view results :(((');
+                }
             });
         </script>
     </head>
@@ -61,7 +48,7 @@
             <div class="title">Program was completed. Program code is:</div>
             <div class="code"><code></code></div>
         </div>
-        <div>Поле снизу будет содержать результат выполнения запроса:</div>
-        <div id="answer" class="answer">Загрузка...</div>
+        <div>This field will contain result of executed promise:</div>
+        <div id="answer" class="answer">Loading...</div>
     </body>
 </html>
